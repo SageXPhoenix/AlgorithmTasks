@@ -1,0 +1,47 @@
+#include <iostream>
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+ListNode* deleteDuplicates(ListNode* head) {
+    ListNode* start = new ListNode();
+    ListNode* iter_lists = start;
+    int buffer = INT_MIN;
+
+    if (!head) {
+        return nullptr;
+    }
+
+    while (head && head->next) {
+        if (buffer == INT_MIN) {
+            if (head->val == head->next->val) {
+                buffer = head->val;
+            } else {
+                iter_lists->next = head;
+                iter_lists = head;
+            }
+        } else {
+            if (buffer != head->val) {
+                buffer = INT_MIN;
+            }
+        }
+        head = head->next;
+    }
+
+    if (buffer == INT_MIN && head) {
+        iter_lists->next = head;
+        iter_lists = head;
+    } else {
+        iter_lists->next = nullptr;
+    }
+    iter_lists->next = nullptr;
+
+    start = start->next;
+
+    return start;
+}
