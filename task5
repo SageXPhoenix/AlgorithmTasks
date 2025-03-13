@@ -1,0 +1,42 @@
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+    if (!list1) return list2;
+    if (!list2) return list1;
+
+    ListNode* mergedListNodesHead = nullptr;
+    ListNode* mergedListNodesTail = nullptr;
+
+    while (list1 && list2) {
+        ListNode* nodeToAdd;
+        if (list1->val < list2->val) {
+            nodeToAdd = list1;
+            list1 = list1->next;
+        } else {
+            nodeToAdd = list2;
+            list2 = list2->next;
+        }
+
+        if (!mergedListNodesHead) {
+            mergedListNodesHead = nodeToAdd;
+            mergedListNodesTail = nodeToAdd;
+        } else {
+            mergedListNodesTail->next = nodeToAdd;
+            mergedListNodesTail = nodeToAdd;
+        }
+    }
+
+    if (list1) {
+        if (!mergedListNodesHead) {
+            mergedListNodesHead = list1;
+        } else {
+            mergedListNodesTail->next = list1;
+        }
+    } else if (list2) {
+        if (!mergedListNodesHead) {
+            mergedListNodesHead = list2;
+        } else {
+            mergedListNodesTail->next = list2;
+        }
+    }
+
+    return mergedListNodesHead;
+}
